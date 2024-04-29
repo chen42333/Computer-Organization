@@ -1,0 +1,59 @@
+# int f5() {
+#     return 8;
+# }
+
+# int f4() {
+#     return 10;
+# }
+
+# int f3() {
+#     return 5;
+# }
+
+# int f2() {
+#     return f4();
+# }
+
+# int f1() {
+#     return f2()+f3();
+# }
+
+# int main() {
+#     int a= f1()-f5();
+# }
+
+main:
+	jal f1
+	add $s0, $v0, $0
+	jal f5
+	sub $t5, $s0, $v0
+	j exit
+f1:
+	addi $sp,$sp,-4
+	sw $ra,0($sp)
+	jal f2
+	add $s0, $v0, $0
+	jal f3
+	add $v0, $s0, $v0
+	lw $ra,0($sp)
+	addi $sp,$sp,4
+	jr $ra
+f2:
+	addi $sp,$sp,-4
+	sw $ra,0($sp)
+	jal f4
+	lw $ra,0($sp)
+	addi $sp,$sp,4
+	jr $ra
+f3:
+	addi $v0, $0, 5
+	jr $ra
+f4:
+	addi $v0, $0, 10
+	jr $ra
+f5:
+	addi $v0, $0, 8
+	jr $ra
+exit:
+	nop
+	

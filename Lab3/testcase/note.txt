@@ -1,0 +1,5 @@
+TEST PROCEDURE:
+1. checkout file format
+2. put all testcase and files in directory "add" to your project directory, and use Vivado/iVerilog to run simulation
+3. compare your output and the answer
+4. use program to find plagiarism or not

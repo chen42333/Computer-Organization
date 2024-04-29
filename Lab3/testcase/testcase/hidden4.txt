@@ -1,0 +1,47 @@
+# int f(volatile int *a) {
+#     return ++*a;
+# }
+# 
+# int main() {
+#     volatile int a = 5;
+#     f(&a);
+# }
+
+main:
+        nop
+        addi    $sp,$sp,-40
+        addi    $2,$0,5                        # $2 = 5
+        sw      $2,24($sp)
+        addi    $2,$sp,24                      # $2 = &a
+        add     $4,$2,$0                       # $4 = &a
+        jal     f
+        nop
+
+        addi    $sp,$sp,40
+        j exit
+        nop
+
+f:
+        sw      $4,0($sp)
+        lw      $2,0($sp)                      # $2 = &a
+        nop
+        lw      $2,0($2)                       # $2 = a
+        nop
+        addi    $2,$2,1                        # $2 = a + 1
+        lw      $3,0($sp)                      # $3 = &a
+        nop
+        sw      $2,0($3)                       # *&a = a + 1
+        jr      $31
+        nop
+
+exit:
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
